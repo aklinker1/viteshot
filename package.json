@@ -1,5 +1,5 @@
 {
-  "name": "viteshot",
+  "name": "@aklinker1/viteshot",
   "description": "Build and generate store screenshots and promo images with code, powered by Vite",
   "version": "0.1.0",
   "type": "module",

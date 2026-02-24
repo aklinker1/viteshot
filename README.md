@@ -17,7 +17,7 @@ However, AI is really good at building *simple* UIs with HTML! ViteShot provides
 1. Add Vite and ViteShot as dev dependencies to your project:
 
    ```sh
-   bun add -D vite viteshot
+   bun add -D vite @aklinker1/viteshot
    ```
 
 2. Initialize the `./store` directory:
