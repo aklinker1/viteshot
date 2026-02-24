@@ -1,6 +1,8 @@
+<div align="center">
 # viteshot
 
-Manage and generate screenshots for your app store listing from code.
+Build and generate store screenshots with code.
+</div>
 
 ```sh
 bun add -D vite viteshot
