@@ -36,7 +36,9 @@
   },
   "types": "dist/index.d.mts",
   "module": "dist/index.mjs",
-  "bin": "dist/cli.mjs",
+  "bin": {
+    "viteshot": "dist/cli.mjs"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.mts",
