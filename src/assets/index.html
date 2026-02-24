@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Viteshot</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        min-width: 0;
+        min-height: 0;
+        list-style: none;
+      }
+
+      .app {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .header h1 {
+        flex: 1;
+      }
+      .header select {
+        flex-shrink: 0;
+        padding-left: 0.25rem;
+      }
+      .list-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="app"></div>
+    <script type="module" src="/@viteshot/index"></script>
+  </body>
+</html>

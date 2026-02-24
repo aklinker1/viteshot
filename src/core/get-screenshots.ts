@@ -1,0 +1,36 @@
+import { readdir } from "node:fs/promises";
+import { extname, join, relative } from "node:path";
+import natsort from "natural-compare-lite";
+
+export async function getScreenshots(
+  screenshotsDir: string,
+): Promise<Screenshot[]> {
+  const allFiles = await readdir(screenshotsDir, {
+    recursive: true,
+    withFileTypes: true,
+  });
+
+  return allFiles
+    .filter((file) => file.isFile())
+    .map<Screenshot>((file) => {
+      const path = join(file.parentPath, file.name);
+      const ext = extname(file.name);
+      const filenameNoExt = file.name.slice(0, -ext.length);
+      const [name, size] = filenameNoExt.split("@", 2);
+      const [width, height] = size
+        ? size.split("x").map((value) => Number(value))
+        : [];
+
+      return {
+        id: relative(screenshotsDir, path),
+        path,
+        ext,
+        filenameNoExt,
+        name: name!,
+        size,
+        width,
+        height,
+      };
+    })
+    .toSorted((a, b) => natsort(a.id, b.id));
+}
