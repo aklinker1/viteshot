@@ -8,8 +8,8 @@ import { resolverPlugin } from "./resolver-plugin";
 
 export type UserConfig = ViteUserConfig & {
   localesDir?: string;
+  designsDir?: string;
   screenshotsDir?: string;
-  screenshotsOutputDir?: string;
   screenshotsConcurrency?: number;
 };
 
@@ -20,8 +20,8 @@ export type InlineConfig = UserConfig & {
 export type ResolvedConfig = {
   root: string;
   localesDir: string;
+  designsDir: string;
   screenshotsDir: string;
-  screenshotsOutputDir: string;
   screenshotsConcurrency: number;
   vite: ViteInlineConfig;
 };
@@ -51,18 +51,18 @@ export async function resolveConfig(
 
   const {
     localesDir: _localesDir,
+    designsDir: _designsDir,
     screenshotsDir: _screenshotsDir,
-    screenshotsOutputDir: _screenshotsOutputDir,
     screenshotsConcurrency: _screenshotsConcurrency,
     ...vite
   } = await importConfig(root);
 
+  const designsDir = _designsDir
+    ? resolve(root, _designsDir)
+    : join(root, "designs");
   const screenshotsDir = _screenshotsDir
     ? resolve(root, _screenshotsDir)
     : join(root, "screenshots");
-  const screenshotsOutputDir = _screenshotsOutputDir
-    ? resolve(root, _screenshotsOutputDir)
-    : join(root, "output");
   const localesDir = _localesDir
     ? resolve(root, _localesDir)
     : join(root, "locales");
@@ -71,8 +71,8 @@ export async function resolveConfig(
   const config: ResolvedConfig = {
     root,
     localesDir,
+    designsDir,
     screenshotsDir,
-    screenshotsOutputDir,
     screenshotsConcurrency,
     vite: {
       ...vite,

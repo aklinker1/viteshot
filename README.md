@@ -2,9 +2,15 @@
 
 # ViteShot
 
-Build and generate store screenshots with code, powered by Vite.
+Build and generate store screenshots and promo images with code, powered by Vite.
 
 </div>
+
+## Why?
+
+With AI, it's common for developers with less design experience to generate store screenshots and promo images. However, one shot image generation models aren't very good at this yet.
+
+However, AI is really good at building *simple* UIs with HTML! ViteShot provides a simple way for agents in your preferred dev environment to create and generate images in a structured, easy-to-iterate way.
 
 ## Get Started
 
@@ -31,29 +37,22 @@ Build and generate store screenshots with code, powered by Vite.
    }
    ```
 
-Then generate your screenshots with `bun store:generate`! Screenshots will be output to `store/output`.
+Then generate your screenshots with `bun store:generate`! Screenshots will be output to `store/screenshots`.
 
-## Screenshot File Types
+## Design Files
+
+Your screenshot designs go in `store/designs/{name}@{width}x{height}.{ext}`.
+
+- `{name}`: The name of your screenshot, it can be anything (ex: "small-marquee", "screenshot-1", etc).
+- `{width}x{height}`: The size your screenshot should be rendered at (ex: "1280x600", "640x400").
+- `{ext}`: ViteShot supports a variety of file extensions, so you can build your designs using your preferred frontend framework!
 
 ### HTML (Recommended)
 
-You can use simple HTML files for screenshots. This is recommended because screenshots are static, you don't need a frontend framework to create a static layout.
+You don't need a frontend framework to build a simple static layout.
 
 ```html
-<div>
-  My Screenshot design
-</div>
-```
-
-Note that your screenshot should be an HTML fragment, not a full HTML document. You can have as many root elements as you like, including `<style>` or `<link>` elements:
-
-```html
-<link rel="stylesheet" href="assets/tailwind.css">
-
-<div class="flex flex-col gap-4">
-  <h1>Title</h1>
-  <p>Text</p>
-</div>
+<div>My screenshot design</div>
 ```
 
 ### Vue

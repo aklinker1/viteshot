@@ -1,5 +1,5 @@
 import { defineConfig } from "tsdown";
-import { resolve, dirname, basename } from "node:path";
+import { resolve, dirname } from "node:path";
 import { readFile } from "node:fs/promises";
 
 const RAW_REGEX = /\?raw$/;

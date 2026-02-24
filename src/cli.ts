@@ -1,7 +1,7 @@
 import { createServer } from "./core/create-server";
 import { generateScreenshots } from "./core/generate-screenshots";
 
-const [command, ...args] = process.argv.slice(2);
+const [command, ..._args] = process.argv.slice(2);
 
 switch (command) {
   case "dev":

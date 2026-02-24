@@ -105,7 +105,7 @@ export const resolverPlugin = (config: ResolvedConfig): PluginOption => [
     load: {
       filter: VIRTUAL_SCREENSHOTS_FILTER,
       handler: async () => {
-        const screenshots = await getScreenshots(config.screenshotsDir);
+        const screenshots = await getScreenshots(config.designsDir);
         return `export default ${JSON.stringify(screenshots)}`;
       },
     },
@@ -135,10 +135,10 @@ export const resolverPlugin = (config: ResolvedConfig): PluginOption => [
       handler: (id) => {
         const screenshotId = decodeURIComponent(id.slice(36));
         if (!screenshotId)
-          throw Error(`Required query param \"id\" not provided for ${id}`);
+          throw Error(`Required query param "id" not provided for ${id}`);
 
         const ext = extname(screenshotId);
-        const path = join(config.screenshotsDir, screenshotId);
+        const path = join(config.designsDir, screenshotId);
         const template = RENDER_SCREENSHOT_JS_TEMPLATES[ext];
         if (!template)
           throw Error(
@@ -158,7 +158,7 @@ export const resolverPlugin = (config: ResolvedConfig): PluginOption => [
       handler: (id) => {
         const localeId = id.slice(27);
         if (!localeId)
-          throw Error(`Required query param \"id\" not provided for ${id}`);
+          throw Error(`Required query param "id" not provided for ${id}`);
 
         return join(config.localesDir, localeId);
       },

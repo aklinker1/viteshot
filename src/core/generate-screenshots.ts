@@ -12,7 +12,7 @@ import { getLocales } from "./get-locales";
 export async function generateScreenshots(dir?: string): Promise<void> {
   const config = await resolveConfig(dir);
   const cwd = process.cwd();
-  const screenshots = await getScreenshots(config.screenshotsDir);
+  const screenshots = await getScreenshots(config.designsDir);
   const locales = await getLocales(config.localesDir);
 
   console.log(
@@ -23,8 +23,8 @@ export async function generateScreenshots(dir?: string): Promise<void> {
   let browser: Browser | undefined;
 
   try {
-    await rm(config.screenshotsOutputDir, { recursive: true, force: true });
-    await mkdir(config.screenshotsOutputDir, { recursive: true });
+    await rm(config.screenshotsDir, { recursive: true, force: true });
+    await mkdir(config.screenshotsDir, { recursive: true });
 
     server = await createServer(config.vite);
     server.listen();
@@ -48,7 +48,7 @@ export async function generateScreenshots(dir?: string): Promise<void> {
           (locale ? `${locale.language}/` : "") +
           screenshot.id.slice(0, -screenshot.ext.length) +
           ".webp";
-        const outputPath = join(config.screenshotsOutputDir, outputId);
+        const outputPath = join(config.screenshotsDir, outputId);
         const outputDir = dirname(outputPath);
         await mkdir(outputDir, { recursive: true });
 
@@ -78,7 +78,7 @@ export async function generateScreenshots(dir?: string): Promise<void> {
           });
         });
         console.log(
-          `  ✅ \x1b[2m./${relative(cwd, config.screenshotsOutputDir)}/\x1b[0m\x1b[36m${outputId}\x1b[0m`,
+          `  ✅ \x1b[2m./${relative(cwd, config.screenshotsDir)}/\x1b[0m\x1b[36m${outputId}\x1b[0m`,
         );
         await page.close();
       },

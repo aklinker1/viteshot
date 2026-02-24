@@ -14,9 +14,9 @@ export type Screenshot = {
 };
 
 export async function getScreenshots(
-  screenshotsDir: string,
+  designsDir: string,
 ): Promise<Screenshot[]> {
-  const allFiles = await readdir(screenshotsDir, {
+  const allFiles = await readdir(designsDir, {
     recursive: true,
     withFileTypes: true,
   });
@@ -33,7 +33,7 @@ export async function getScreenshots(
         : [];
 
       return {
-        id: relative(screenshotsDir, path),
+        id: relative(designsDir, path),
         path,
         ext,
         filenameNoExt,
