@@ -32,7 +32,9 @@ export async function generateScreenshots(dir?: string): Promise<void> {
 
     browser = await puppeteer.launch({
       executablePath: process.env.VITESHOT_CHROME_PATH,
-      headless: true,
+      // Uncomment to debug
+      // headless: false,
+      // slowMo: 1000,
     });
 
     const screenshotMutex = new Mutex();
@@ -50,16 +52,16 @@ export async function generateScreenshots(dir?: string): Promise<void> {
         const outputDir = dirname(outputPath);
         await mkdir(outputDir, { recursive: true });
 
-        const page = await browser!.newPage();
+        const page = await browser!.newPage({
+          // Don't switch the active tab to this tab when opening - this
+          // prevents accessive active tab changes, only switching to a tab to
+          // take a screenshot.
+          background: true,
+        });
         await page.goto(
-          `http://localhost:${port}/screenshot/${screenshot.id}${
-            locale ? `?language=${locale.language}` : ""
-          }`,
+          `http://localhost:${port}/screenshot/${locale?.id ?? "null"}/${screenshot.id}`,
           { waitUntil: "networkidle0", timeout: 5e3 },
         );
-        await page.waitForSelector("*[viteshot-ready]", {
-          timeout: 1e3,
-        });
         await screenshotMutex.runExclusive(async () => {
           await page.bringToFront();
           await page.screenshot({
@@ -85,6 +87,17 @@ export async function generateScreenshots(dir?: string): Promise<void> {
         stopOnError: true,
       },
     );
+  } catch (err: any) {
+    if (
+      err?.message ===
+      "An `executablePath` or `channel` must be specified for `puppeteer-core`"
+    ) {
+      throw Error(
+        `Chromium not detected. Set the VITESHOT_CHROME_PATH env var to your Chromium executable.`,
+      );
+    } else {
+      throw err;
+    }
   } finally {
     await browser?.close().catch(() => {});
     await server?.close().catch(() => {});

@@ -75,13 +75,16 @@ export const resolverPlugin = (config: ResolvedConfig): PluginOption => [
   {
     name: "viteshot:resolve-screenshot-html",
     configureServer: resolveTemplate({
-      match: (url) => url.pathname === "/screenshot",
+      match: (url) => /\/screenshot\/.*?\/.*?/.test(url.pathname),
       template: screenshotHtmlTemplate,
       transform: true,
-      vars: (url) => ({
-        "screenshot.id": encodeURIComponent(url.searchParams.get("sid") ?? ""),
-        "locale.id": encodeURIComponent(url.searchParams.get("lid") ?? ""),
-      }),
+      vars: (url) => {
+        const [localeId, screenshotId] = url.pathname.slice(12).split("/");
+        return {
+          "screenshot.id": screenshotId!,
+          "locale.id": localeId!,
+        };
+      },
     }),
   },
   {
@@ -124,14 +127,13 @@ export const resolverPlugin = (config: ResolvedConfig): PluginOption => [
   {
     name: "viteshot:resolve-virtual:render-screenshot",
     resolveId: {
-      filter: { id: [/\/viteshot-virtual\/render-screenshot/] },
+      filter: { id: [/^\/viteshot-virtual\/render-screenshot/] },
       handler: (id) => id,
     },
     load: {
-      filter: { id: [/\/viteshot-virtual\/render-screenshot/] },
+      filter: { id: [/^\/viteshot-virtual\/render-screenshot/] },
       handler: (id) => {
-        const url = new URL(id, "http://localhost");
-        const screenshotId = url.searchParams.get("id");
+        const screenshotId = decodeURIComponent(id.slice(36));
         if (!screenshotId)
           throw Error(`Required query param \"id\" not provided for ${id}`);
 
@@ -154,8 +156,7 @@ export const resolverPlugin = (config: ResolvedConfig): PluginOption => [
     resolveId: {
       filter: { id: [/\/viteshot-virtual\/messages/] },
       handler: (id) => {
-        const url = new URL(id, "http://localhost");
-        const localeId = url.searchParams.get("id");
+        const localeId = id.slice(27);
         if (!localeId)
           throw Error(`Required query param \"id\" not provided for ${id}`);
 

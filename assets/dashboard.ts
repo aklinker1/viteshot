@@ -70,7 +70,7 @@ function renderScreenshots() {
     li.append(p);
 
     const iframe = document.createElement("iframe");
-    iframe.src = `/screenshot?sid=${encodeURIComponent(screenshot.id)}${currentLanguageId ? `&lid=${encodeURIComponent(currentLanguageId)}` : ""}&t=${Date.now()}`;
+    iframe.src = `/screenshot/${currentLanguageId ? encodeURIComponent(currentLanguageId) : "null"}/${encodeURIComponent(screenshot.id)}`;
     if (screenshot.width) iframe.width = String(screenshot.width);
     if (screenshot.width) iframe.height = String(screenshot.height);
     li.append(iframe);
