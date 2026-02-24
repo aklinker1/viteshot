@@ -1,7 +1,9 @@
 <div align="center">
+
 # viteshot
 
 Build and generate store screenshots with code.
+
 </div>
 
 ```sh
