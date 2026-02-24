@@ -1,46 +1,37 @@
 <div align="center">
 
-# viteshot
+# ViteShot
 
-Build and generate store screenshots with code.
+Build and generate store screenshots with code, powered by Vite.
 
 </div>
 
-```sh
-bunx viteshot init ./store
-```
+## Get Started
 
-## Usage
+1. Add Vite and ViteShot as dev dependencies to your project:
 
-The init command will generate the following structure:
+   ```sh
+   bun add -D vite viteshot
+   ```
 
-```
-<root>/
-  store/
-    locales/              -- optional
-      en.json
-      es.json
-      ...
-    screenshots/
-      one@640x400.html
-      two@1280x600.html
-      ...
-    viteshot.config.ts    -- optional
-  package.json
-```
+2. Initialize the `./store` directory:
 
-Make sure you add the following scripts to your `package.json`:
+   ```sh
+   bun viteshot init ./store
+   ```
 
-```json
-{
-  "scripts": {
-    "store:dev": "viteshot dev ./store",
-    "store:generate": "viteshot generate ./store",
-  }
-}
-```
+3. Add the following scripts to your `package.json`:
 
-The final argument, in this case `./store`, indicates the directory to run `viteshot` inside of. You can name it whatever you want.
+   ```sh
+   {
+     "scripts": {
+       "store:dev": "viteshot dev ./store",
+       "store:generate": "viteshot generate ./store",
+     }
+   }
+   ```
+
+Then generate your screenshots with `bun store:generate`! Screenshots will be output to `store/output`.
 
 ## Screenshot File Types
 
@@ -70,10 +61,6 @@ Note that your screenshot should be an HTML fragment, not a full HTML document. 
 TODO
 
 ### Svelte
-
-TODO
-
-### Solid
 
 TODO
 
