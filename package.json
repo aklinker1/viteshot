@@ -4,7 +4,7 @@
   "type": "module",
   "packageManager": "bun@1.3.9",
   "scripts": {
-    "viteshot": "bun run src/cli.ts",
+    "viteshot": "bun run -d process.env.DEV:\"true\" src/cli.ts",
     "dev": "bun viteshot dev example",
     "generate": "bun viteshot generate example",
     "build": "tsdown src/index.ts src/cli.ts"

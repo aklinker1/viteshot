@@ -1,11 +1,11 @@
 import { readFile } from "node:fs/promises";
 import { readdir } from "node:fs/promises";
 import { extname, join } from "node:path";
-import { flattenObject } from "../utils";
 
 export type Locale = {
+  id: string;
   language: string;
-  messages: Record<string, string>;
+  messages: Record<string, any>;
 };
 
 export async function getLocales(localesDir: string): Promise<Locale[]> {
@@ -19,8 +19,9 @@ export async function getLocales(localesDir: string): Promise<Locale[]> {
       const text = await readFile(path, "utf-8");
       const messages = JSON.parse(text);
       return {
+        id: file,
         language: file.slice(0, -ext.length),
-        messages: flattenObject(messages),
+        messages,
       };
     }),
   );

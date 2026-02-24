@@ -4,8 +4,7 @@ import type {
 } from "vite";
 import { resolve, join } from "node:path";
 import { pathToFileURL } from "node:url";
-import { assetsPlugin } from "../plugins/assets-plugin";
-import { screenshotsPlugin } from "../plugins/screenshots-plugin";
+import { resolverPlugin } from "./resolver-plugin";
 
 export type UserConfig = ViteUserConfig & {
   localesDir?: string;
@@ -83,7 +82,20 @@ export async function resolveConfig(
 
   // Add plugins
   config.vite.plugins ??= [];
-  config.vite.plugins.push(assetsPlugin(), screenshotsPlugin(config));
+  config.vite.plugins.push(resolverPlugin(config));
+
+  // Ignore virtual modules
+  config.vite.resolve ??= {};
+  config.vite.resolve.external ??= [];
+  const external = config.vite.resolve.external;
+  if (Array.isArray(external)) {
+    external.push(
+      "viteshot-assets/dashboard.ts",
+      "viteshot-assets/screenshot.ts",
+      "viteshot-virtual/render-screenshot?id={{screenshot.id}}",
+      "viteshot-virtual/locale?id={{locale.id}}",
+    );
+  }
 
   return config;
 }

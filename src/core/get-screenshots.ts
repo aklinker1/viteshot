@@ -2,6 +2,17 @@ import { readdir } from "node:fs/promises";
 import { extname, join, relative } from "node:path";
 import natsort from "natural-compare-lite";
 
+export type Screenshot = {
+  id: string;
+  path: string;
+  ext: string;
+  filenameNoExt: string;
+  name: string;
+  size: string | undefined;
+  width: number | undefined;
+  height: number | undefined;
+};
+
 export async function getScreenshots(
   screenshotsDir: string,
 ): Promise<Screenshot[]> {

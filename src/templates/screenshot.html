@@ -15,6 +15,13 @@
   <body>
     <div id="app" class="app"></div>
     <!-- prettier-ignore -->
-    <script type="module">{{RENDER_SCRIPT}}</script>
+    <script type="module">
+      import { renderScreenshot } from "/viteshot-virtual/render-screenshot?id={{screenshot.id}}";
+      import messages from "/viteshot-virtual/messages?id={{locale.id}}";
+
+      console.log({ renderScreenshot, messages })
+
+      renderScreenshot(app, messages);
+    </script>
   </body>
 </html>
