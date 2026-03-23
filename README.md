@@ -4,6 +4,8 @@
 
 Build and generate store screenshots and promo images with code, powered by Vite.
 
+<img width="1241" height="1243" alt="image" src="https://github.com/user-attachments/assets/c6eb4360-f367-4c37-8132-c675c7afe212" />
+
 </div>
 
 ## Why?
