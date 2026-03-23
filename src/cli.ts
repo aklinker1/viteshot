@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { createServer } from "./core/create-server";
 import { generateScreenshots } from "./core/generate-screenshots";
 
