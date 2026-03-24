@@ -5,12 +5,33 @@ import type {
 import { resolve, join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { resolverPlugin } from "./resolver-plugin";
+import type { ScreenshotOptions } from "puppeteer-core";
+import type { LaunchOptions } from "puppeteer-core";
+import type { CreatePageOptions } from "puppeteer-core";
+
+export type PuppeteerOptions = {
+  launchOptions?: LaunchOptions;
+  newPageOptions?: CreatePageOptions;
+  screenshotOptions?: Omit<ScreenshotOptions, "clip" | "path">;
+};
 
 export type UserConfig = ViteUserConfig & {
-  localesDir?: string;
-  designsDir?: string;
-  screenshotsDir?: string;
-  screenshotsConcurrency?: number;
+  screenshots?: {
+    /** @default "locales" */
+    localesDir?: string;
+    /** @default "designs" */
+    designsDir?: string;
+    /** @default "screenshots" */
+    screenshotsDir?: string;
+    /**
+     * How many screenshots can be generated concurrently.
+     *
+     * @default 4
+     */
+    renderConcurrency?: number;
+    /** Override the options passed into puppeteer. */
+    puppeteer?: PuppeteerOptions;
+  };
 };
 
 export type InlineConfig = UserConfig & {
@@ -22,7 +43,8 @@ export type ResolvedConfig = {
   localesDir: string;
   designsDir: string;
   screenshotsDir: string;
-  screenshotsConcurrency: number;
+  renderConcurrency: number;
+  puppeteer?: PuppeteerOptions;
   vite: ViteInlineConfig;
 };
 
@@ -49,33 +71,26 @@ export async function resolveConfig(
 ): Promise<ResolvedConfig> {
   const root = resolve(dir);
 
-  const {
-    localesDir: _localesDir,
-    designsDir: _designsDir,
-    screenshotsDir: _screenshotsDir,
-    screenshotsConcurrency: _screenshotsConcurrency,
-    ...vite
-  } = await importConfig(root);
+  const { screenshots: _screenshots, ...vite } = await importConfig(root);
 
-  const designsDir = _designsDir
-    ? resolve(root, _designsDir)
+  const designsDir = _screenshots?.designsDir
+    ? resolve(root, _screenshots.designsDir)
     : join(root, "designs");
-  const screenshotsDir = _screenshotsDir
-    ? resolve(root, _screenshotsDir)
+  const screenshotsDir = _screenshots?.screenshotsDir
+    ? resolve(root, _screenshots.screenshotsDir)
     : join(root, "screenshots");
-  const localesDir = _localesDir
-    ? resolve(root, _localesDir)
+  const localesDir = _screenshots?.localesDir
+    ? resolve(root, _screenshots.localesDir)
     : join(root, "locales");
-  const screenshotsConcurrency = _screenshotsConcurrency || 1;
+  const renderConcurrency = _screenshots?.renderConcurrency || 4;
 
   const config: ResolvedConfig = {
     root,
     localesDir,
     designsDir,
     screenshotsDir,
-    screenshotsConcurrency,
+    renderConcurrency,
     vite: {
-      assetsInclude: ["**/*.html"],
       ...vite,
       configFile: false,
     },

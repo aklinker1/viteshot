@@ -32,6 +32,7 @@ export async function generateScreenshots(dir?: string): Promise<void> {
 
     browser = await puppeteer.launch({
       executablePath: process.env.VITESHOT_CHROME_PATH,
+      ...config.puppeteer?.launchOptions,
       // Uncomment to debug
       // headless: false,
       // slowMo: 1000,
@@ -45,9 +46,7 @@ export async function generateScreenshots(dir?: string): Promise<void> {
       ),
       async ({ screenshot, locale }) => {
         const outputId =
-          (locale ? `${locale.language}/` : "") +
-          screenshot.id.slice(0, -screenshot.ext.length) +
-          ".webp";
+          (locale ? `${locale.language}/` : "") + screenshot.name + ".webp";
         const outputPath = join(config.screenshotsDir, outputId);
         const outputDir = dirname(outputPath);
         await mkdir(outputDir, { recursive: true });
@@ -57,6 +56,7 @@ export async function generateScreenshots(dir?: string): Promise<void> {
           // prevents accessive active tab changes, only switching to a tab to
           // take a screenshot.
           background: true,
+          ...config.puppeteer?.newPageOptions,
         });
         await page.goto(
           `http://localhost:${port}/screenshot/${locale?.id ?? "null"}/${screenshot.id}`,
@@ -66,24 +66,25 @@ export async function generateScreenshots(dir?: string): Promise<void> {
           await page.bringToFront();
           await page.screenshot({
             captureBeyondViewport: true,
+            type: "webp",
+            quality: 100,
+            ...config.puppeteer?.screenshotOptions,
             clip: {
               x: 0,
               y: 0,
               width: screenshot.width!,
               height: screenshot.height!,
             },
-            type: "webp",
-            quality: 100,
             path: outputPath,
           });
         });
         console.log(
           `  ✅ \x1b[2m./${relative(cwd, config.screenshotsDir)}/\x1b[0m\x1b[36m${outputId}\x1b[0m`,
         );
-        await page.close();
+        await page.close({ runBeforeUnload: false });
       },
       {
-        concurrency: config.screenshotsConcurrency,
+        concurrency: config.renderConcurrency,
         stopOnError: true,
       },
     );
