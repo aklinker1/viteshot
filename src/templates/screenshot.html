@@ -15,8 +15,10 @@
   <body>
     <div id="app" class="app"></div>
     <script type="module">
-      import { renderScreenshot } from "/viteshot-virtual/render-screenshot/{{screenshot.id}}";
+      console.log("TEST", location.pathname);
+      import { renderScreenshot } from "/viteshot-virtual/render-screenshot/{{screenshot.id}}.js";
       import messages from "/viteshot-virtual/messages/{{locale.id}}";
+      console.log({ messages, renderScreenshot });
 
       renderScreenshot(app, messages);
     </script>

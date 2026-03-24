@@ -31,7 +31,7 @@ export function defineConfig(config: UserConfig): UserConfig {
 }
 
 async function importConfig(root: string): Promise<UserConfig> {
-  const configFile = join(root, "viteshot.config"); // Minus extension, not needed in import()
+  const configFile = join(root, "viteshot.config.ts"); // Minus extension, not needed in import()
   const configFileUrl = pathToFileURL(configFile).href;
 
   try {
@@ -75,6 +75,7 @@ export async function resolveConfig(
     screenshotsDir,
     screenshotsConcurrency,
     vite: {
+      assetsInclude: ["**/*.html"],
       ...vite,
       configFile: false,
     },

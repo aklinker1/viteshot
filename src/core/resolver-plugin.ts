@@ -5,6 +5,9 @@ import {
   dashboardHtmlTemplate,
   screenshotHtmlTemplate,
   renderHtmlScreenshotJsTemplate,
+  renderVueScreenshotJsTemplate,
+  renderReactScreenshotJsTemplate,
+  renderSvelteScreenshotJsTemplate,
 } from "../templates";
 import { getViteshotAssetsDir } from "../utils";
 import { extname, join } from "node:path";
@@ -54,6 +57,10 @@ function applyTemplateVars(
 
 const RENDER_SCREENSHOT_JS_TEMPLATES: Record<string, string> = {
   ".html": renderHtmlScreenshotJsTemplate,
+  ".vue": renderVueScreenshotJsTemplate,
+  ".tsx": renderReactScreenshotJsTemplate,
+  ".jsx": renderReactScreenshotJsTemplate,
+  ".svelte": renderSvelteScreenshotJsTemplate,
 };
 
 export const resolverPlugin = (config: ResolvedConfig): PluginOption => [
@@ -133,7 +140,7 @@ export const resolverPlugin = (config: ResolvedConfig): PluginOption => [
     load: {
       filter: { id: [/^\/viteshot-virtual\/render-screenshot/] },
       handler: (id) => {
-        const screenshotId = decodeURIComponent(id.slice(36));
+        const screenshotId = decodeURIComponent(id.slice(36, -3));
         if (!screenshotId)
           throw Error(`Required query param "id" not provided for ${id}`);
 

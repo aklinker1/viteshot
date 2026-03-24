@@ -10,3 +10,6 @@ export { default as faviconSvgTemplate } from "./favicon.svg?raw" with { type: "
 export { default as dashboardHtmlTemplate } from "./dashboard.html?raw" with { type: "text" };
 export { default as screenshotHtmlTemplate } from "./screenshot.html?raw" with { type: "text" };
 export { default as renderHtmlScreenshotJsTemplate } from "./render-html-screenshot.js?raw" with { type: "text" };
+export { default as renderVueScreenshotJsTemplate } from "./render-vue-screenshot.js?raw" with { type: "text" };
+export { default as renderReactScreenshotJsTemplate } from "./render-react-screenshot.js?raw" with { type: "text" };
+export { default as renderSvelteScreenshotJsTemplate } from "./render-svelte-screenshot.js?raw" with { type: "text" };
