@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer-core";
 import { resolveConfig } from "./config";
-import { getScreenshots } from "./get-screenshots";
+import { getScreenshots, logInvalidDesignFiles } from "./get-screenshots";
 import { createServer, type ViteDevServer } from "vite";
 import type { Browser } from "puppeteer-core";
 import { mkdir, rm } from "node:fs/promises";
@@ -11,6 +11,8 @@ import { getLocales } from "./get-locales";
 
 export async function exportScreenshots(dir?: string): Promise<void> {
   const config = await resolveConfig(dir);
+  await logInvalidDesignFiles(config.designsDir);
+
   const cwd = process.cwd();
   const screenshots = await getScreenshots(config.designsDir);
   const locales = await getLocales(config.localesDir);
