@@ -66,8 +66,7 @@ Your screenshot designs go in `store/designs/{name}@{width}x{height}.{ext}`.
 ### Vue
 
 1. Add `@vitejs/plugin-vue` to `store/viteshot.config.ts`
-2. Add a `.vue` design file
-3. Use the `t` prop to access translations for the current locale
+2. Use the `t` prop to access translations for the current locale
 
 ```vue
 <!-- store/designs/example@640x480.vue -->
@@ -87,8 +86,7 @@ defineProps<{
 ### Svelte
 
 1. Add `@sveltejs/vite-plugin-svelte` to `store/viteshot.config.ts`
-2. Add a `.svelte` design file
-3. Use the `t` prop to access translations for the current locale
+2. Use the `t` prop to access translations for the current locale
 
 ```svelte
 <!-- store/designs/example@640x480.svelte -->
@@ -102,9 +100,8 @@ defineProps<{
 ### React
 
 1. Add `@vitejs/plugin-react` to `store/viteshot.config.ts`
-2. Export your component as the default module from your `.tsx` or `.jsx` file
-3. Import any styles
-4. Use the `t` prop to access translations for the current locale
+2. You're component must be the default export
+3. Use the `t` prop to access translations for the current locale
 
 ```tsx
 // store/designs/example@640x400.tsx
