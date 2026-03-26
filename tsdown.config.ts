@@ -1,15 +1,18 @@
 import { defineConfig } from "tsdown";
 import { resolve, dirname } from "node:path";
 import { readFile } from "node:fs/promises";
+import { execSync } from "node:child_process";
+import { styleText } from "node:util";
 
-const buildHash = await Bun.$`bun --silent build:hash`;
+const commitHash = execSync(`bun --silent build:hash`).toString().trim();
+console.log(`${styleText("blue", "ℹ")} Commit hash: ${styleText("blue", commitHash)}`);
 
 const RAW_REGEX = /\?raw$/;
 
 export default defineConfig({
   define: {
     "process.env.DEV": "false",
-    "process.env.COMMIT_HASH": buildHash.text().trim(),
+    "process.env.COMMIT_HASH": JSON.stringify(commitHash),
   },
   plugins: [
     {
