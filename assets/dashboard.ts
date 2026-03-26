@@ -176,7 +176,7 @@ function renderScreenshots() {
             {
               width: String(ss.width),
               height: String(ss.height),
-              src: `/screenshot/${currentLanguageId ? encodeURIComponent(currentLanguageId) : "null"}/${encodeURIComponent(ss.id)}`,
+              src: `/screenshot/${currentLanguageId ? encodeURIComponent(currentLanguageId) : "null"}/${encodeURIComponent(ss.id)}.html`,
             },
             [],
           ),

@@ -31,6 +31,11 @@ export type UserConfig = ViteUserConfig & {
     renderConcurrency?: number;
     /** Override the options passed into puppeteer. */
     puppeteer?: PuppeteerOptions;
+    /**
+     * List of relative paths from your viteshot.config.ts file to CSS files to
+     * add to your screenshot's HTML file as links.
+     */
+    css?: string[];
   };
 };
 
@@ -44,7 +49,8 @@ export type ResolvedConfig = {
   designsDir: string;
   screenshotsDir: string;
   renderConcurrency: number;
-  puppeteer?: PuppeteerOptions;
+  puppeteer: PuppeteerOptions | undefined;
+  css: string[];
   vite: ViteInlineConfig;
 };
 
@@ -91,6 +97,7 @@ export async function resolveConfig(
     screenshotsDir,
     renderConcurrency,
     puppeteer: _screenshots?.puppeteer,
+    css: _screenshots?.css ?? [],
     vite: {
       ...vite,
       configFile: false,

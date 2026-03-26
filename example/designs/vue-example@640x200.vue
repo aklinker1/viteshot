@@ -5,8 +5,8 @@ defineProps<{
 </script>
 
 <template>
-  <div>
-    <p>Vue Example</p>
+  <div class="p-4">
+    <p class="text-2xl">Vue Example</p>
     <p>{{ t.translated }}</p>
   </div>
 </template>

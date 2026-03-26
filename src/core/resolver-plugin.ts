@@ -86,10 +86,15 @@ export const resolverPlugin = (config: ResolvedConfig): PluginOption => [
       template: screenshotHtmlTemplate,
       transform: true,
       vars: (url) => {
-        const [localeId, screenshotId] = url.pathname.slice(12).split("/");
+        const [localeId, screenshotId] = url.pathname.slice(12, -5).split("/");
+        const links = config.css.map(
+          (file) =>
+            `<link rel="stylesheet" href="/@fs${join(config.root, file)}" />`,
+        );
         return {
           "screenshot.id": screenshotId!,
           "locale.id": localeId!,
+          css: links.join(""),
         };
       },
     }),
