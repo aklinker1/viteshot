@@ -123,6 +123,17 @@
       }
       .list-item .title-row .name {
         font-size: calc(5 * var(--spacing));
+        position: relative;
+      }
+      .list-item .title-row .name:before {
+        content: "# ";
+        position: absolute;
+        left: calc(-4 * var(--spacing));
+        opacity: 0%;
+        transition: 0.1s;
+      }
+      .list-item .title-row .name:hover:before {
+        opacity: 70%;
       }
       .list-item .title-row .size {
         color: color-mix(in srgb, var(--color-base-content) 50%, transparent);
