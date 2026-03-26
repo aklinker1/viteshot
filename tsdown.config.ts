@@ -2,9 +2,15 @@ import { defineConfig } from "tsdown";
 import { resolve, dirname } from "node:path";
 import { readFile } from "node:fs/promises";
 
+const buildHash = await Bun.$`bun --silent build:hash`;
+
 const RAW_REGEX = /\?raw$/;
 
 export default defineConfig({
+  define: {
+    "process.env.DEV": "false",
+    "process.env.COMMIT_HASH": buildHash.text().trim(),
+  },
   plugins: [
     {
       name: "raw-text",
