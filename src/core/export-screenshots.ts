@@ -59,7 +59,7 @@ export async function exportScreenshots(dir?: string): Promise<void> {
           ...config.puppeteer?.newPageOptions,
         });
         await page.goto(
-          `http://localhost:${port}/screenshot/${locale?.id ?? "null"}/${screenshot.id}`,
+          `http://localhost:${port}/screenshot/${locale?.id ?? "null"}/${screenshot.id}.html`,
           { waitUntil: "networkidle0", timeout: 5e3 },
         );
         await screenshotMutex.runExclusive(async () => {
