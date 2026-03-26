@@ -90,6 +90,7 @@ export async function resolveConfig(
     designsDir,
     screenshotsDir,
     renderConcurrency,
+    puppeteer: _screenshots?.puppeteer,
     vite: {
       ...vite,
       configFile: false,
