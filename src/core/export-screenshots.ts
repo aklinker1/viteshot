@@ -9,22 +9,22 @@ import { relative, join, dirname } from "node:path";
 import { Mutex } from "async-mutex";
 import { getLocales } from "./get-locales";
 
-export async function generateScreenshots(dir?: string): Promise<void> {
+export async function exportScreenshots(dir?: string): Promise<void> {
   const config = await resolveConfig(dir);
   const cwd = process.cwd();
   const screenshots = await getScreenshots(config.designsDir);
   const locales = await getLocales(config.localesDir);
 
   console.log(
-    `\n\x1b[1mGenerating ${screenshots.length * (locales.length || 1)} screenshots...\x1b[0m\n`,
+    `\n\x1b[1mExporting ${screenshots.length * (locales.length || 1)} screenshots...\x1b[0m\n`,
   );
 
   let server: ViteDevServer | undefined;
   let browser: Browser | undefined;
 
   try {
-    await rm(config.screenshotsDir, { recursive: true, force: true });
-    await mkdir(config.screenshotsDir, { recursive: true });
+    await rm(config.exportsDir, { recursive: true, force: true });
+    await mkdir(config.exportsDir, { recursive: true });
 
     server = await createServer(config.vite);
     server.listen();
@@ -47,7 +47,7 @@ export async function generateScreenshots(dir?: string): Promise<void> {
       async ({ screenshot, locale }) => {
         const outputId =
           (locale ? `${locale.language}/` : "") + screenshot.name + ".webp";
-        const outputPath = join(config.screenshotsDir, outputId);
+        const outputPath = join(config.exportsDir, outputId);
         const outputDir = dirname(outputPath);
         await mkdir(outputDir, { recursive: true });
 
@@ -79,7 +79,7 @@ export async function generateScreenshots(dir?: string): Promise<void> {
           });
         });
         console.log(
-          `  ✅ \x1b[2m./${relative(cwd, config.screenshotsDir)}/\x1b[0m\x1b[36m${outputId}\x1b[0m`,
+          `  ✅ \x1b[2m./${relative(cwd, config.exportsDir)}/\x1b[0m\x1b[36m${outputId}\x1b[0m`,
         );
         await page.close({ runBeforeUnload: false });
       },

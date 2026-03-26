@@ -35,7 +35,7 @@ export async function init(_dir: string): Promise<void> {
   }
   console.log("\nAdd the following scripts to your package.json:\n");
   console.log(`  "viteshot:dev": "viteshot dev ${relativeDir}",`);
-  console.log(`  "viteshot:generate": "viteshot generate ${relativeDir}"\n`);
+  console.log(`  "viteshot:export": "viteshot export ${relativeDir}"\n`);
 }
 
 async function waitForInput(): Promise<string> {

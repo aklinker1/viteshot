@@ -10,7 +10,7 @@ ${styleText("bold", "Usage: viteshot <command>")} ${styleText(["bold", "blue"], 
 ${styleText("bold", "Commands")}
 
   ${styleText(["bold", "magenta"], "dev")}       ${styleText("dim", "store")}            Preview and update your screenshots
-  ${styleText(["bold", "magenta"], "generate")}  ${styleText("dim", "store")}            Generate screenshots
+  ${styleText(["bold", "magenta"], "export")}    ${styleText("dim", "store")}            Export screenshots
   ${styleText(["bold", "magenta"], "init")}      ${styleText("dim", "store")}            Initialize viteshot in your project
 
   ${styleText("dim", "<command>")} ${styleText(["bold", "blue"], "--help")}           Print help text for a command
@@ -29,17 +29,17 @@ ${styleText("bold", "Examples:")}
   ${styleText(["bold", "green"], "viteshot init")} promos
 `;
 
-export const GENERATE_HELP_MESSAGE = `
-${styleText("bold", "Usage:")} ${styleText(["bold", "green"], "viteshot generate")} ${styleText("bold", "[<folder>]")}
-  Generate screenshots from your Viteshot project.
+export const EXPORT_HELP_MESSAGE = `
+${styleText("bold", "Usage:")} ${styleText(["bold", "green"], "viteshot export")} ${styleText("bold", "[<folder>]")}
+  Export screenshots from your Viteshot project.
 
 ${styleText("bold", "Args:")}
 
   ${FOLDER_ARG}
 
 ${styleText("bold", "Examples:")}
-  ${styleText(["bold", "green"], "viteshot generate")}
-  ${styleText(["bold", "green"], "viteshot generate")} promos
+  ${styleText(["bold", "green"], "viteshot export")}
+  ${styleText(["bold", "green"], "viteshot export")} promos
 `;
 
 export const INIT_HELP_MESSAGE = `

@@ -19,18 +19,23 @@ export type UserConfig = ViteUserConfig & {
   screenshots?: {
     /** @default "locales" */
     localesDir?: string;
+
     /** @default "designs" */
     designsDir?: string;
+
     /** @default "screenshots" */
-    screenshotsDir?: string;
+    exportsDir?: string;
+
     /**
-     * How many screenshots can be generated concurrently.
+     * How many screenshots can be exported concurrently.
      *
      * @default 4
      */
     renderConcurrency?: number;
+
     /** Override the options passed into puppeteer. */
     puppeteer?: PuppeteerOptions;
+
     /**
      * List of relative paths from your viteshot.config.ts file to CSS files to
      * add to your screenshot's HTML file as links.
@@ -47,7 +52,7 @@ export type ResolvedConfig = {
   root: string;
   localesDir: string;
   designsDir: string;
-  screenshotsDir: string;
+  exportsDir: string;
   renderConcurrency: number;
   puppeteer: PuppeteerOptions | undefined;
   css: string[];
@@ -82,9 +87,9 @@ export async function resolveConfig(
   const designsDir = _screenshots?.designsDir
     ? resolve(root, _screenshots.designsDir)
     : join(root, "designs");
-  const screenshotsDir = _screenshots?.screenshotsDir
-    ? resolve(root, _screenshots.screenshotsDir)
-    : join(root, "screenshots");
+  const exportsDir = _screenshots?.exportsDir
+    ? resolve(root, _screenshots.exportsDir)
+    : join(root, "exports");
   const localesDir = _screenshots?.localesDir
     ? resolve(root, _screenshots.localesDir)
     : join(root, "locales");
@@ -94,7 +99,7 @@ export async function resolveConfig(
     root,
     localesDir,
     designsDir,
-    screenshotsDir,
+    exportsDir,
     renderConcurrency,
     puppeteer: _screenshots?.puppeteer,
     css: _screenshots?.css ?? [],

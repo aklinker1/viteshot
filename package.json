@@ -7,7 +7,7 @@
   "scripts": {
     "viteshot": "bun run -d process.env.DEV:\"true\" -d process.env.COMMIT_HASH:\"'DEV'\" src/cli.ts",
     "dev": "bun viteshot dev example",
-    "generate": "bun viteshot generate example",
+    "export": "bun viteshot export example",
     "build": "tsdown src/index.ts src/cli.ts ",
     "build:hash": "git rev-parse --short=7 HEAD"
   },
@@ -77,6 +77,7 @@
     "images",
     "screenshot",
     "generate",
+    "export",
     "store"
   ]
 }

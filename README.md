@@ -12,7 +12,7 @@ Generate store screenshots and promo images with code, powered by Vite.
 
 With AI, it's common for developers with less design experience to generate store screenshots and promo images. However, one shot image generation models aren't very good at this yet.
 
-However, AI is really good at building _simple_ UIs with HTML! ViteShot provides a simple way for agents in your preferred dev environment to create and generate images in a structured, easy-to-iterate way.
+However, AI is really good at building _simple_ UIs with HTML! ViteShot provides a simple way for agents in your preferred dev environment to create and export images in a structured, easy-to-iterate way.
 
 ## Get Started
 
@@ -34,12 +34,12 @@ However, AI is really good at building _simple_ UIs with HTML! ViteShot provides
    {
      "scripts": {
        "viteshot:dev": "viteshot dev store",
-       "viteshot:generate": "viteshot generate store",
+       "viteshot:export": "viteshot export store",
      }
    }
    ```
 
-Then generate your screenshots with `bun viteshot:generate`! Screenshots will be output to `store/screenshots`.
+Then export your screenshots with `bun viteshot:export`! Screenshots will be output to `store/exports`.
 
 ## Design Files
 
@@ -148,7 +148,7 @@ There are a few ways of adding CSS to your screenshots:
    <style>
      ...
    </style>
-   
+
    <div>...</div>
    ```
 
