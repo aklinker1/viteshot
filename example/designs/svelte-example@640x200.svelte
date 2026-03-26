@@ -1,6 +1,4 @@
 <script lang="ts">
-import "../assets/styles.css";
-
 export let t: Record<string, any>;
 </script>
 

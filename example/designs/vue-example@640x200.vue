@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import "../assets/styles.css";
-
 defineProps<{
   t: Record<string, any>;
 }>();
