@@ -19,13 +19,13 @@ However, AI is really good at building _simple_ UIs with HTML! ViteShot provides
 1. Add Vite and ViteShot as dev dependencies to your project:
 
    ```sh
-   bun add -D vite @aklinker1/viteshot
+   bun add -D @aklinker1/viteshot vite
    ```
 
 2. Initialize the `./store` directory:
 
    ```sh
-   bun viteshot init ./store
+   bun viteshot init store
    ```
 
 3. Add the following scripts to your `package.json`:
@@ -33,13 +33,13 @@ However, AI is really good at building _simple_ UIs with HTML! ViteShot provides
    ```sh
    {
      "scripts": {
-       "store:dev": "viteshot dev ./store",
-       "store:generate": "viteshot generate ./store",
+       "viteshot:dev": "viteshot dev store",
+       "viteshot:generate": "viteshot generate store",
      }
    }
    ```
 
-Then generate your screenshots with `bun store:generate`! Screenshots will be output to `store/screenshots`.
+Then generate your screenshots with `bun viteshot:generate`! Screenshots will be output to `store/screenshots`.
 
 ## Design Files
 
@@ -52,13 +52,11 @@ Your screenshot designs go in `store/designs/{name}@{width}x{height}.{ext}`.
 ### HTML
 
 1. Define an HTML fragment, this will be added to the `body` element automatically.
-2. `<link>` to your CSS for styles or use an inline `<style>` block
-3. Translations can be accessed using the handlebars syntax
+2. Translations can be accessed using the handlebars syntax
 
 ```html
 <!-- designs/example@640x400.html-->
-<link rel="stylesheet" href="assets/tailwind.css" />
-<div>{{path.to.translation}}</div>
+<p>{{path.to.message}}</p>
 ```
 
 > [!NOTE]
@@ -68,9 +66,8 @@ Your screenshot designs go in `store/designs/{name}@{width}x{height}.{ext}`.
 ### Vue
 
 1. Add `@vitejs/plugin-vue` to `store/viteshot.config.ts`
-2. Define your screenshot in a `.vue` file
-3. Import any styles, or use Vue's `<style>` block
-4. Use the `t` prop to access translations for the current locale
+2. Add a `.vue` design file
+3. Use the `t` prop to access translations for the current locale
 
 ```vue
 <!-- store/designs/example@640x480.vue -->
@@ -89,24 +86,17 @@ defineProps<{
 
 ### Svelte
 
-> [!WARN]
->
-> Experimental, not 100% working yet.
-
 1. Add `@sveltejs/vite-plugin-svelte` to `store/viteshot.config.ts`
-2. Export your component as the default module from your `.svelte` file
-3. Import any styles or use an inline `<style>` block
-4. Use the `t` prop to access translations for the current locale
+2. Add a `.svelte` design file
+3. Use the `t` prop to access translations for the current locale
 
 ```svelte
 <!-- store/designs/example@640x480.svelte -->
 <script lang="ts">
-  import "../assets/tailwind.css"
-
   export let t: Record<string, any>
 </script>
 
-<p>{t.path.to.translation}</p>
+<p>{t.path.to.message}</p>
 ```
 
 ### React
@@ -122,17 +112,64 @@ import React from "react";
 import "../assets/tailwind.css";
 
 export default function (props: { t: Record<string, any> }) {
-  return <p>{t.path.to.translation}</p>;
+  return <p>{t.path.to.message}</p>;
 }
 ```
 
 ## Styling
 
-1. Setup your framework (like installing the TailwindCSS Vite plugin)
-2. In your screenshots file, `<link>` to your CSS file, import your CSS file, or import your UI framework's components
+There are a few ways of adding CSS to your screenshots:
 
-And that's it!
+1. Add global, shared CSS to your `viteshot.config.ts` file:
+
+   ```ts
+   import { defineConfig } from "@aklinker1/viteshot";
+
+   export default defineConfig({
+     screenshots: {
+       css: ["assets/tailwind.css"], // Supports SCSS, SASS, etc
+     },
+   });
+   ```
+
+2. Import your CSS files from inside your design file
+
+   ```tsx
+   import "../assets/tailwind.css";
+
+   export default function () {
+     return <div>...</div>;
+   }
+   ```
+
+3. Use inline `<style>` blocks
+
+   ```html
+   <style>
+     ...
+   </style>
+   
+   <div>...</div>
+   ```
+
+| Method           | HTML | Vue | Svelte | React |
+| ---------------- | :--: | :-: | :----: | :---: |
+| Add `css` config |  ✅  | ✅  |   ✅   |  ✅   |
+| Import CSS file  |  ❌  | ✅  |   ✅   |  ✅   |
+| Inline `<style>` |  ✅  | ✅  |   ✅   |  ❌   |
 
 ## Assets
 
-Create an `assets` directory and reference them via `assets/<filename>`. Vite will load them.
+Vite allows you to put assets in two folders:
+
+1. `assets/`
+2. `public/`
+
+For HTML designs, you need to put files in `public/`, but for the other supported frameworks, you can use `assets/` and import them into your design file.
+
+| Method    | HTML | Vue | Svelte | React |
+| --------- | :--: | :-: | :----: | :---: |
+| `assets/  |  ❌  | ✅  |   ✅   |  ✅   |
+| `public/` |  ✅  | ✅  |   ✅   |  ✅   |
+
+Review [Vite's docs](https://vite.dev/guide/assets) for how to import or use assets from each directory.
