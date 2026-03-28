@@ -55,7 +55,7 @@ export async function exportScreenshots(dir?: string): Promise<void> {
 
         const page = await browser!.newPage({
           // Don't switch the active tab to this tab when opening - this
-          // prevents accessive active tab changes, only switching to a tab to
+          // prevents excessive active tab changes, only switching to a tab to
           // take a screenshot.
           background: true,
           ...config.puppeteer?.newPageOptions,

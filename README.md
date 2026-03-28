@@ -102,7 +102,7 @@ defineProps<{
 ### React
 
 1. Add `@vitejs/plugin-react` to `store/viteshot.config.ts`
-2. You're component must be the default export
+2. Your component must be the default export
 3. Use the `t` prop to access translations for the current locale
 
 ```tsx
