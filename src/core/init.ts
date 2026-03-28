@@ -1,11 +1,12 @@
 import { access } from "node:fs/promises";
 import { mkdir, writeFile } from "node:fs/promises";
-import { dirname, resolve, relative, join } from "node:path";
+import { dirname, resolve, relative, join, basename } from "node:path";
 import { styleText } from "node:util";
 
 export async function init(_dir: string): Promise<void> {
   const absDir = resolve(_dir);
   const relativeDir = relative(process.cwd(), absDir);
+  const dirBasename = basename(_dir);
 
   for (const [file, contents] of Object.entries(FILES)) {
     const path = join(absDir, file);
@@ -34,8 +35,8 @@ export async function init(_dir: string): Promise<void> {
     );
   }
   console.log("\nAdd the following scripts to your package.json:\n");
-  console.log(`  "viteshot:dev": "viteshot dev ${relativeDir}",`);
-  console.log(`  "viteshot:export": "viteshot export ${relativeDir}"\n`);
+  console.log(`  "${dirBasename}:dev": "viteshot dev ${relativeDir}",`);
+  console.log(`  "${dirBasename}:export": "viteshot export ${relativeDir}"\n`);
 }
 
 async function waitForInput(): Promise<string> {

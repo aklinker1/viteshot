@@ -33,13 +33,13 @@ However, AI is really good at building _simple_ UIs with HTML! ViteShot provides
    ```sh
    {
      "scripts": {
-       "viteshot:dev": "viteshot dev store",
-       "viteshot:export": "viteshot export store",
+       "store:dev": "viteshot dev store",
+       "store:export": "viteshot export store",
      }
    }
    ```
 
-Then export your screenshots with `bun viteshot:export`! Screenshots will be output to `store/exports`.
+Then export your screenshots with `bun store:export`! Screenshots will be output to `store/exports`.
 
 ## Design Files
 
