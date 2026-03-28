@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.4.4
+
+[compare changes](https://github.com/aklinker1/viteshot/compare/v0.4.3...v0.4.4)
+
+### 📖 Documentation
+
+- Show screenshot on NPM ([2ab0ead](https://github.com/aklinker1/viteshot/commit/2ab0ead))
+
+### 🏡 Chore
+
+- Add README screenshot ([fe1bdb0](https://github.com/aklinker1/viteshot/commit/fe1bdb0))
+- Ignore changelog formatting ([097574f](https://github.com/aklinker1/viteshot/commit/097574f))
+
+### ❤️ Contributors
+
+- Aaron ([@aklinker1](https://github.com/aklinker1))
+
 ## v0.4.3
 
 [compare changes](https://github.com/aklinker1/viteshot/compare/v0.4.2...v0.4.3)
