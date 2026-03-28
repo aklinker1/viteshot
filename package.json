@@ -13,8 +13,6 @@
     "prepack": "bun run build"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^6.0.1",
-    "@vitejs/plugin-vue": "^6.0.5",
     "async-mutex": "^0.5.0",
     "natural-compare-lite": "^1.4.0",
     "p-map": "^7.0.4",
@@ -28,6 +26,20 @@
     "react-dom": ">=19",
     "svelte": ">=5"
   },
+  "peerDependenciesMeta": {
+    "vue": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "svelte": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@aklinker1/check": "^2.2.0",
     "@sveltejs/vite-plugin-svelte": "^7.0.0",
@@ -36,6 +48,8 @@
     "@types/natural-compare-lite": "^1.4.2",
     "@types/react": "^19.2.14",
     "@typescript/native-preview": "^7.0.0-dev.20260223.1",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitejs/plugin-vue": "^6.0.5",
     "oxlint": "^1.50.0",
     "prettier": "^3.8.1",
     "prettier-plugin-jsdoc": "^1.8.0",

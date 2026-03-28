@@ -5,8 +5,6 @@
     "": {
       "name": "viteshot",
       "dependencies": {
-        "@vitejs/plugin-react": "^6.0.1",
-        "@vitejs/plugin-vue": "^6.0.5",
         "async-mutex": "^0.5.0",
         "natural-compare-lite": "^1.4.0",
         "p-map": "^7.0.4",
@@ -21,6 +19,8 @@
         "@types/natural-compare-lite": "^1.4.2",
         "@types/react": "^19.2.14",
         "@typescript/native-preview": "^7.0.0-dev.20260223.1",
+        "@vitejs/plugin-react": "^6.0.1",
+        "@vitejs/plugin-vue": "^6.0.5",
         "oxlint": "^1.50.0",
         "prettier": "^3.8.1",
         "prettier-plugin-jsdoc": "^1.8.0",
@@ -37,6 +37,12 @@
         "vite": ">=5",
         "vue": ">=3",
       },
+      "optionalPeers": [
+        "react",
+        "react-dom",
+        "svelte",
+        "vue",
+      ],
     },
   },
   "packages": {
@@ -570,10 +576,6 @@
 
     "quansync": ["quansync@1.0.0", "", {}, "sha512-5xZacEEufv3HSTPQuchrvV6soaiACMFnq1H8wkVioctoH3TRha9Sz66lOxRwPK/qZj7HPiSveih9yAyh98gvqA=="],
 
-    "react": ["react@19.2.4", "", {}, "sha512-9nfp2hYpCwOjAN+8TZFGhtWEwgvWHXqESH8qT89AT/lWklpLON22Lc8pEtnpsZz7VmawabSU0gCjnj8aC0euHQ=="],
-
-    "react-dom": ["react-dom@19.2.4", "", { "dependencies": { "scheduler": "^0.27.0" }, "peerDependencies": { "react": "^19.2.4" } }, "sha512-AXJdLo8kgMbimY95O2aKQqsz2iWi9jMgKJhRBAxECE4IFxfcazB2LmzloIoibJI3C12IlY20+KFaLv+71bUJeQ=="],
-
     "require-directory": ["require-directory@2.1.1", "", {}, "sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q=="],
 
     "resolve-from": ["resolve-from@4.0.0", "", {}, "sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g=="],
@@ -585,8 +587,6 @@
     "rolldown-plugin-dts": ["rolldown-plugin-dts@0.22.1", "", { "dependencies": { "@babel/generator": "8.0.0-rc.1", "@babel/helper-validator-identifier": "8.0.0-rc.1", "@babel/parser": "8.0.0-rc.1", "@babel/types": "8.0.0-rc.1", "ast-kit": "^3.0.0-beta.1", "birpc": "^4.0.0", "dts-resolver": "^2.1.3", "get-tsconfig": "^4.13.1", "obug": "^2.1.1" }, "peerDependencies": { "@ts-macro/tsc": "^0.3.6", "@typescript/native-preview": ">=7.0.0-dev.20250601.1", "rolldown": "^1.0.0-rc.3", "typescript": "^5.0.0", "vue-tsc": "~3.2.0" }, "optionalPeers": ["@ts-macro/tsc", "@typescript/native-preview", "typescript", "vue-tsc"] }, "sha512-5E0AiM5RSQhU6cjtkDFWH6laW4IrMu0j1Mo8x04Xo1ALHmaRMs9/7zej7P3RrryVHW/DdZAp85MA7Be55p0iUw=="],
 
     "sade": ["sade@1.8.1", "", { "dependencies": { "mri": "^1.1.0" } }, "sha512-xal3CZX1Xlo/k4ApwCFrHVACi9fBqJ7V+mwhBsuf/1IOKbBy098Fex+Wa/5QMubw09pSZ/u8EY8PWgevJsXp1A=="],
-
-    "scheduler": ["scheduler@0.27.0", "", {}, "sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q=="],
 
     "semver": ["semver@7.7.4", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-vFKC2IEtQnVhpT78h1Yp8wzwrf8CM+MzKMHGJZfBtzhZNycRFnXsHk6E5TxIkkMsgNS7mdX3AGB7x2QM2di4lA=="],
 

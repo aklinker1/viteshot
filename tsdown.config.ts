@@ -3,13 +3,17 @@ import { resolve, dirname } from "node:path";
 import { readFile } from "node:fs/promises";
 import { execSync } from "node:child_process";
 import { styleText } from "node:util";
+import { rm } from "node:fs/promises";
 
 const commitHash = execSync(`bun --silent build:hash`).toString().trim();
-console.log(`${styleText("blue", "ℹ")} Commit hash: ${styleText("blue", commitHash)}`);
+console.log(
+  `${styleText("blue", "ℹ")} Commit hash: ${styleText("blue", commitHash)}`,
+);
 
 const RAW_REGEX = /\?raw$/;
 
 export default defineConfig({
+  entry: ["src/index.ts", "src/cli.ts"],
   define: {
     "process.env.DEV": "false",
     "process.env.COMMIT_HASH": JSON.stringify(commitHash),
@@ -31,4 +35,9 @@ export default defineConfig({
       },
     },
   ],
+  hooks: {
+    async "build:done"() {
+      await rm("dist/cli.d.mts");
+    },
+  },
 });
