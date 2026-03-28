@@ -2,6 +2,8 @@
 
 # ViteShot
 
+[![NPM Version](https://img.shields.io/npm/v/%40aklinker1%2Fviteshot?logo=npm&labelColor=red&color=white)](https://www.npmjs.com/package/@aklinker1/viteshot) [![Docs](https://img.shields.io/badge/API%20Reference-blue?logo=readme&logoColor=white)](https://github.com/aklinker1/viteshot)
+
 Generate store screenshots and promo images with code, powered by Vite.
 
 <img width="840" height="1243" alt="Example" src="https://github.com/user-attachments/assets/caf1cdd9-a9f6-4208-86ef-f3e78b27b28c" />
