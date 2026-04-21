@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.4.6
+
+[compare changes](https://github.com/aklinker1/viteshot/compare/v0.4.5...v0.4.6)
+
+### 🩹 Fixes
+
+- **dev:** Use real package name when resolving assets dir ([ddca3be](https://github.com/aklinker1/viteshot/commit/ddca3be))
+
+### 🏡 Chore
+
+- Fix formatting ([d29ddf3](https://github.com/aklinker1/viteshot/commit/d29ddf3))
+
+### ❤️ Contributors
+
+- Aaron ([@aklinker1](https://github.com/aklinker1))
+
 ## v0.4.5
 
 [compare changes](https://github.com/aklinker1/viteshot/compare/v0.4.4...v0.4.5)
