@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.4.5
+
+[compare changes](https://github.com/aklinker1/viteshot/compare/v0.4.4...v0.4.5)
+
+### 🩹 Fixes
+
+- **dev:** Properly resolve the assets directory ([#2](https://github.com/aklinker1/viteshot/pull/2))
+
+### 🏡 Chore
+
+- Add cspell ([13dfd17](https://github.com/aklinker1/viteshot/commit/13dfd17))
+- Upgrade `@aklinker1/check` to work with cspell ([bca9e67](https://github.com/aklinker1/viteshot/commit/bca9e67))
+
+### ❤️ Contributors
+
+- Aaron ([@aklinker1](https://github.com/aklinker1))
+
 ## v0.4.4
 
 [compare changes](https://github.com/aklinker1/viteshot/compare/v0.4.3...v0.4.4)
