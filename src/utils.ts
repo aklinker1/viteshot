@@ -1,6 +1,8 @@
-import { resolve } from "node:path";
+import { resolve, dirname, join } from "node:path";
 
 export async function getViteshotAssetsDir(): Promise<string> {
   if (process.env.DEV) return resolve("assets");
-  else return import.meta.resolve("viteshot");
+
+  const pkgJsonPath = await import.meta.resolve("viteshot/package.json");
+  return join(dirname(pkgJsonPath), "assets");
 }
