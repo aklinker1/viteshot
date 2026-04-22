@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.7
+
+[compare changes](https://github.com/aklinker1/viteshot/compare/v0.4.6...v0.4.7)
+
+### 🩹 Fixes
+
+- **dev:** Properly resolve package files ([3cb69a5](https://github.com/aklinker1/viteshot/commit/3cb69a5))
+
+### ❤️ Contributors
+
+- Aaron ([@aklinker1](https://github.com/aklinker1))
+
 ## v0.4.6
 
 [compare changes](https://github.com/aklinker1/viteshot/compare/v0.4.5...v0.4.6)
