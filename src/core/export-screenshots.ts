@@ -1,9 +1,8 @@
 import { mkdir, rm } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
-import type { Browser } from "puppeteer-core";
-import puppeteer from "puppeteer-core";
 import { withLock } from "superlock";
 import { createServer, type ViteDevServer } from "vite";
+import { openChromium, type CdpBrowser } from "./cdp";
 import { resolveConfig } from "./config";
 import { getLocales, type Locale } from "./get-locales";
 import {
@@ -25,7 +24,7 @@ export async function exportScreenshots(dir?: string): Promise<void> {
   );
 
   let server: ViteDevServer | undefined;
-  let browser: Browser | undefined;
+  let browser: CdpBrowser | undefined;
 
   try {
     await rm(config.exportsDir, { recursive: true, force: true });
@@ -35,16 +34,14 @@ export async function exportScreenshots(dir?: string): Promise<void> {
     server.listen();
     const { port } = server.config.server;
 
-    browser = await puppeteer.launch({
+    browser = await openChromium({
       executablePath: process.env.VITESHOT_CHROME_PATH,
-      ...config.puppeteer?.launchOptions,
+      ...config.cdp,
       // Uncomment to debug
       // headless: false,
-      // slowMo: 1000,
     });
 
     const renderLock = withLock(config.renderConcurrency);
-    const saveScreenshotLock = withLock();
 
     const render = async ({
       screenshot,
@@ -59,37 +56,14 @@ export async function exportScreenshots(dir?: string): Promise<void> {
       const outputDir = dirname(outputPath);
       await mkdir(outputDir, { recursive: true });
 
-      const page = await browser!.newPage({
-        // Don't switch the active tab to this tab when opening - this
-        // prevents excessive active tab changes, only switching to a tab to
-        // take a screenshot.
-        background: true,
-        ...config.puppeteer?.newPageOptions,
-      });
-      await page.goto(
+      const page = await browser!.newPage(
         `http://localhost:${port}/screenshot/${locale?.id ?? "null"}/${screenshot.id}.html`,
-        { waitUntil: "networkidle0", timeout: 5e3 },
       );
-      await saveScreenshotLock(async () => {
-        await page.bringToFront();
-        await page.screenshot({
-          captureBeyondViewport: true,
-          type: "webp",
-          quality: 100,
-          ...config.puppeteer?.screenshotOptions,
-          clip: {
-            x: 0,
-            y: 0,
-            width: screenshot.width!,
-            height: screenshot.height!,
-          },
-          path: outputPath,
-        });
-      });
+      await page.screenshot(outputPath, screenshot.width, screenshot.height);
       console.log(
         `  ✅ \x1b[2m./${relative(cwd, config.exportsDir)}/\x1b[0m\x1b[36m${outputId}\x1b[0m`,
       );
-      await page.close({ runBeforeUnload: false });
+      await page.close();
     };
 
     await Promise.all(
@@ -111,7 +85,7 @@ export async function exportScreenshots(dir?: string): Promise<void> {
       throw err;
     }
   } finally {
-    await browser?.close().catch(() => {});
+    browser?.close();
     await server?.close().catch(() => {});
 
     console.log("");
