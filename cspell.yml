@@ -1,4 +1,7 @@
-version: "0.2"
+ignorePaths:
+  - node_modules/**
+  - dist/**
+  - example/locales/es.json
 words:
   - viteshot
   - oxlint
@@ -6,7 +9,4 @@ words:
   - klinker
   - networkidle
   - natsort
-ignorePaths:
-  - node_modules/**
-  - dist/**
-  - example/locales/es.json
+  - superlock

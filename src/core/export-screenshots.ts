@@ -1,13 +1,16 @@
-import puppeteer from "puppeteer-core";
-import { resolveConfig } from "./config";
-import { getScreenshots, logInvalidDesignFiles } from "./get-screenshots";
-import { createServer, type ViteDevServer } from "vite";
-import type { Browser } from "puppeteer-core";
 import { mkdir, rm } from "node:fs/promises";
-import pMap from "p-map";
-import { relative, join, dirname } from "node:path";
-import { Mutex } from "async-mutex";
-import { getLocales } from "./get-locales";
+import { dirname, join, relative } from "node:path";
+import type { Browser } from "puppeteer-core";
+import puppeteer from "puppeteer-core";
+import { withLock } from "superlock";
+import { createServer, type ViteDevServer } from "vite";
+import { resolveConfig } from "./config";
+import { getLocales, type Locale } from "./get-locales";
+import {
+  getScreenshots,
+  logInvalidDesignFiles,
+  type Screenshot,
+} from "./get-screenshots";
 
 export async function exportScreenshots(dir?: string): Promise<void> {
   const config = await resolveConfig(dir);
@@ -40,55 +43,61 @@ export async function exportScreenshots(dir?: string): Promise<void> {
       // slowMo: 1000,
     });
 
-    const screenshotMutex = new Mutex();
+    const renderLock = withLock(config.renderConcurrency);
+    const saveScreenshotLock = withLock();
 
-    await pMap(
-      screenshots.flatMap((screenshot) =>
-        locales.map((locale) => ({ screenshot, locale })),
-      ),
-      async ({ screenshot, locale }) => {
-        const outputId =
-          (locale ? `${locale.language}/` : "") + screenshot.name + ".webp";
-        const outputPath = join(config.exportsDir, outputId);
-        const outputDir = dirname(outputPath);
-        await mkdir(outputDir, { recursive: true });
+    const render = async ({
+      screenshot,
+      locale,
+    }: {
+      screenshot: Screenshot;
+      locale: Locale;
+    }): Promise<void> => {
+      const outputId =
+        (locale ? `${locale.language}/` : "") + screenshot.name + ".webp";
+      const outputPath = join(config.exportsDir, outputId);
+      const outputDir = dirname(outputPath);
+      await mkdir(outputDir, { recursive: true });
 
-        const page = await browser!.newPage({
-          // Don't switch the active tab to this tab when opening - this
-          // prevents excessive active tab changes, only switching to a tab to
-          // take a screenshot.
-          background: true,
-          ...config.puppeteer?.newPageOptions,
+      const page = await browser!.newPage({
+        // Don't switch the active tab to this tab when opening - this
+        // prevents excessive active tab changes, only switching to a tab to
+        // take a screenshot.
+        background: true,
+        ...config.puppeteer?.newPageOptions,
+      });
+      await page.goto(
+        `http://localhost:${port}/screenshot/${locale?.id ?? "null"}/${screenshot.id}.html`,
+        { waitUntil: "networkidle0", timeout: 5e3 },
+      );
+      await saveScreenshotLock(async () => {
+        await page.bringToFront();
+        await page.screenshot({
+          captureBeyondViewport: true,
+          type: "webp",
+          quality: 100,
+          ...config.puppeteer?.screenshotOptions,
+          clip: {
+            x: 0,
+            y: 0,
+            width: screenshot.width!,
+            height: screenshot.height!,
+          },
+          path: outputPath,
         });
-        await page.goto(
-          `http://localhost:${port}/screenshot/${locale?.id ?? "null"}/${screenshot.id}.html`,
-          { waitUntil: "networkidle0", timeout: 5e3 },
-        );
-        await screenshotMutex.runExclusive(async () => {
-          await page.bringToFront();
-          await page.screenshot({
-            captureBeyondViewport: true,
-            type: "webp",
-            quality: 100,
-            ...config.puppeteer?.screenshotOptions,
-            clip: {
-              x: 0,
-              y: 0,
-              width: screenshot.width!,
-              height: screenshot.height!,
-            },
-            path: outputPath,
-          });
-        });
-        console.log(
-          `  ✅ \x1b[2m./${relative(cwd, config.exportsDir)}/\x1b[0m\x1b[36m${outputId}\x1b[0m`,
-        );
-        await page.close({ runBeforeUnload: false });
-      },
-      {
-        concurrency: config.renderConcurrency,
-        stopOnError: true,
-      },
+      });
+      console.log(
+        `  ✅ \x1b[2m./${relative(cwd, config.exportsDir)}/\x1b[0m\x1b[36m${outputId}\x1b[0m`,
+      );
+      await page.close({ runBeforeUnload: false });
+    };
+
+    await Promise.all(
+      screenshots
+        .flatMap((screenshot) =>
+          locales.map((locale) => ({ screenshot, locale })),
+        )
+        .map((item) => renderLock(() => render(item))),
     );
   } catch (err: any) {
     if (
