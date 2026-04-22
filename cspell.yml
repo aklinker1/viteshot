@@ -3,10 +3,11 @@ ignorePaths:
   - dist/**
   - example/locales/es.json
 words:
-  - viteshot
-  - oxlint
   - aklinker
   - klinker
-  - networkidle
   - natsort
+  - networkidle
+  - obug
+  - oxlint
   - superlock
+  - viteshot

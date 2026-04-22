@@ -1,19 +1,11 @@
-import type {
-  UserConfig as ViteUserConfig,
-  InlineConfig as ViteInlineConfig,
-} from "vite";
-import { resolve, join } from "node:path";
+import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import type {
+  InlineConfig as ViteInlineConfig,
+  UserConfig as ViteUserConfig,
+} from "vite";
+import type { CdpOptions } from "./cdp";
 import { resolverPlugin } from "./resolver-plugin";
-import type { ScreenshotOptions } from "puppeteer-core";
-import type { LaunchOptions } from "puppeteer-core";
-import type { CreatePageOptions } from "puppeteer-core";
-
-export type PuppeteerOptions = {
-  launchOptions?: LaunchOptions;
-  newPageOptions?: CreatePageOptions;
-  screenshotOptions?: Omit<ScreenshotOptions, "clip" | "path">;
-};
 
 export type UserConfig = ViteUserConfig & {
   screenshots?: {
@@ -34,7 +26,7 @@ export type UserConfig = ViteUserConfig & {
     renderConcurrency?: number;
 
     /** Override the options passed into puppeteer. */
-    puppeteer?: PuppeteerOptions;
+    cdp?: CdpOptions;
 
     /**
      * List of relative paths from your viteshot.config.ts file to CSS files to
@@ -54,7 +46,7 @@ export type ResolvedConfig = {
   designsDir: string;
   exportsDir: string;
   renderConcurrency: number;
-  puppeteer: PuppeteerOptions | undefined;
+  cdp: CdpOptions | undefined;
   css: string[];
   vite: ViteInlineConfig;
 };
@@ -101,7 +93,7 @@ export async function resolveConfig(
     designsDir,
     exportsDir,
     renderConcurrency,
-    puppeteer: _screenshots?.puppeteer,
+    cdp: _screenshots?.cdp,
     css: _screenshots?.css ?? [],
     vite: {
       ...vite,

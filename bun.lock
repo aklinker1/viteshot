@@ -6,7 +6,7 @@
       "name": "viteshot",
       "dependencies": {
         "natural-compare-lite": "^1.4.0",
-        "puppeteer-core": "^24.37.5",
+        "obug": "^2.1.1",
         "superlock": "^1.2.8",
       },
       "devDependencies": {
