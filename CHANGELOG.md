@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v0.5.0
+
+[compare changes](https://github.com/aklinker1/viteshot/compare/v0.4.7...v0.5.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Drop Puppeteer in favor of a custom CDP client ([#3](https://github.com/aklinker1/viteshot/pull/3))
+
+### 🩹 Fixes
+
+- Reduce dependencies ([51fdd55](https://github.com/aklinker1/viteshot/commit/51fdd55))
+
+### 🤖 CI
+
+- Add pkg.pr.new ([a1602d9](https://github.com/aklinker1/viteshot/commit/a1602d9))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Drop Puppeteer in favor of a custom CDP client ([#3](https://github.com/aklinker1/viteshot/pull/3))
+
+### ❤️ Contributors
+
+- Aaron ([@aklinker1](https://github.com/aklinker1))
+
 ## v0.4.7
 
 [compare changes](https://github.com/aklinker1/viteshot/compare/v0.4.6...v0.4.7)
