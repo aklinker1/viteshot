@@ -151,7 +151,7 @@ async function createPage({
       "Page.captureScreenshot",
       {
         captureBeyondViewport: true,
-        format: screenshotOptions?.type ?? "png",
+        format: screenshotOptions?.type ?? "webp",
         quality:
           screenshotOptions?.type === "png"
             ? undefined
