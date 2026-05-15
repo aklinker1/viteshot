@@ -42,6 +42,7 @@ export async function exportScreenshots(dir?: string): Promise<void> {
     });
 
     const renderLock = withLock(config.renderConcurrency);
+    const imageFormat = config.cdp?.screenshot?.type ?? "webp";
 
     const render = async ({
       screenshot,
@@ -51,7 +52,10 @@ export async function exportScreenshots(dir?: string): Promise<void> {
       locale: Locale;
     }): Promise<void> => {
       const outputId =
-        (locale ? `${locale.language}/` : "") + screenshot.name + ".webp";
+        (locale ? `${locale.language}/` : "") +
+        screenshot.name +
+        "." +
+        imageFormat;
       const outputPath = join(config.exportsDir, outputId);
       const outputDir = dirname(outputPath);
       await mkdir(outputDir, { recursive: true });
