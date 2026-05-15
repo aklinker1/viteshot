@@ -120,7 +120,10 @@
         padding: 0.25rem 0.6rem;
         border-radius: 6px;
         border: 1px solid var(--card-border);
-        transition: color 0.15s, border-color 0.15s, background 0.15s;
+        transition:
+          color 0.15s,
+          border-color 0.15s,
+          background 0.15s;
       }
       .header-docs-link:hover {
         color: var(--accent);
@@ -164,7 +167,10 @@
         background: var(--card-bg);
         color: var(--text-secondary);
         cursor: pointer;
-        transition: color 0.15s, border-color 0.15s, background 0.15s;
+        transition:
+          color 0.15s,
+          border-color 0.15s,
+          background 0.15s;
         padding: 0;
       }
       .theme-toggle:hover {
@@ -177,9 +183,15 @@
         height: 16px;
         pointer-events: none;
       }
-      .theme-toggle > .light { display: none; }
-      [data-theme="light"] .theme-toggle > .dark { display: none; }
-      [data-theme="light"] .theme-toggle > .light { display: block; }
+      .theme-toggle > .light {
+        display: none;
+      }
+      [data-theme="light"] .theme-toggle > .dark {
+        display: none;
+      }
+      [data-theme="light"] .theme-toggle > .light {
+        display: block;
+      }
 
       /* Main */
       .app-body {
@@ -221,7 +233,10 @@
         border-radius: 14px;
         overflow: hidden;
         box-shadow: var(--shadow-card);
-        transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s,
+          transform 0.2s;
       }
       .card:hover {
         border-color: var(--card-border-hover);
@@ -271,7 +286,8 @@
       }
       .card-size-badge {
         font-size: 0.68rem;
-        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        font-family:
+          "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
         color: var(--size-badge-text);
         background: var(--size-badge-bg);
         padding: 0.15rem 0.4rem;
@@ -292,13 +308,15 @@
         font-size: 0.7rem;
         font-weight: 600;
         border-radius: 6px;
-        border: 1px solid rgba(255,255,255,0.18);
+        border: 1px solid rgba(255, 255, 255, 0.18);
         background: rgba(0, 0, 0, 0.55);
         color: #fff;
         cursor: pointer;
         opacity: 0;
         transform: translateY(4px);
-        transition: opacity 0.15s, transform 0.15s;
+        transition:
+          opacity 0.15s,
+          transform 0.15s;
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
       }
@@ -336,7 +354,7 @@
         border: 1px solid var(--card-border);
         border-radius: 14px;
         overflow: hidden;
-        box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
         max-width: calc(100vw - 3rem);
         max-height: calc(100vh - 3rem);
         cursor: default;
@@ -375,7 +393,10 @@
         background: transparent;
         color: var(--text-secondary);
         cursor: pointer;
-        transition: color 0.15s, border-color 0.15s, background 0.15s;
+        transition:
+          color 0.15s,
+          border-color 0.15s,
+          background 0.15s;
         padding: 0;
         flex-shrink: 0;
       }

@@ -5,9 +5,22 @@ import locales from "viteshot-virtual/locales";
 // ── Icons ──────────────────────────────────────────────────────────────────
 
 const LOCALE_FLAGS: Record<string, string> = {
-  be: "🇧🇪", br: "🇧🇷", de: "🇩🇪", en: "🇺🇸", en_gb: "🇬🇧",
-  en_us: "🇺🇸", es: "🇪🇸", es_mx: "🇲🇽", fr: "🇫🇷", it: "🇮🇹",
-  ja: "🇯🇵", pt: "🇧🇷", pt_br: "🇧🇷", ru: "🇷🇺", zh: "🇨🇳", zh_tw: "🇹🇼",
+  be: "🇧🇪",
+  br: "🇧🇷",
+  de: "🇩🇪",
+  en: "🇺🇸",
+  en_gb: "🇬🇧",
+  en_us: "🇺🇸",
+  es: "🇪🇸",
+  es_mx: "🇲🇽",
+  fr: "🇫🇷",
+  it: "🇮🇹",
+  ja: "🇯🇵",
+  pt: "🇧🇷",
+  pt_br: "🇧🇷",
+  ru: "🇷🇺",
+  zh: "🇨🇳",
+  zh_tw: "🇹🇼",
 };
 
 const ICON_CAMERA = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"/></svg>`;
@@ -20,7 +33,8 @@ const ICON_MOON = `<svg class="dark" xmlns="http://www.w3.org/2000/svg" viewBox=
 // ── Language ───────────────────────────────────────────────────────────────
 
 const LANGUAGE_KEY = "viteshot:language";
-let currentLanguageId: string | undefined = getStoredLanguage() ?? locales[0]?.id;
+let currentLanguageId: string | undefined =
+  getStoredLanguage() ?? locales[0]?.id;
 
 function getStoredLanguage() {
   const id = localStorage.getItem(LANGUAGE_KEY);
@@ -35,7 +49,8 @@ function setLanguage(id: string) {
 // ── Theme ──────────────────────────────────────────────────────────────────
 
 const THEME_KEY = "viteshot:theme";
-let currentTheme: string = localStorage.getItem(THEME_KEY) === "light" ? "light" : "dark";
+let currentTheme: string =
+  localStorage.getItem(THEME_KEY) === "light" ? "light" : "dark";
 
 function applyTheme() {
   document.documentElement.setAttribute("data-theme", currentTheme);
@@ -77,7 +92,9 @@ function svgNode(raw: string): SVGElement {
 }
 
 function iframeUrl(ssId: string) {
-  const lang = currentLanguageId ? encodeURIComponent(currentLanguageId) : "null";
+  const lang = currentLanguageId
+    ? encodeURIComponent(currentLanguageId)
+    : "null";
   return `/screenshot/${lang}/${encodeURIComponent(ssId)}.html`;
 }
 
@@ -112,9 +129,13 @@ function renderHeader(app: HTMLElement) {
               },
             },
             locales.map((l) =>
-              h("option", { value: l.id, selected: currentLanguageId === l.id }, [
-                `${LOCALE_FLAGS[l.language.replaceAll("-", "_").toLowerCase()] ?? "🌐"} ${l.language}`,
-              ]),
+              h(
+                "option",
+                { value: l.id, selected: currentLanguageId === l.id },
+                [
+                  `${LOCALE_FLAGS[l.language.replaceAll("-", "_").toLowerCase()] ?? "🌐"} ${l.language}`,
+                ],
+              ),
             ),
           )
         : null,
@@ -132,7 +153,12 @@ function renderHeader(app: HTMLElement) {
 
 const PREVIEW_HEIGHT = 160;
 
-function scaleIframe(wrapper: HTMLElement, iframe: HTMLIFrameElement, naturalWidth: number, naturalHeight: number) {
+function scaleIframe(
+  wrapper: HTMLElement,
+  iframe: HTMLIFrameElement,
+  naturalWidth: number,
+  naturalHeight: number,
+) {
   const ww = wrapper.clientWidth || 300;
   const scale = ww / naturalWidth;
   const scaledHeight = naturalHeight * scale;
@@ -141,7 +167,8 @@ function scaleIframe(wrapper: HTMLElement, iframe: HTMLIFrameElement, naturalWid
   iframe.style.height = `${naturalHeight}px`;
   iframe.style.left = "0";
   // vertically center if scaled height is less than fixed preview height
-  const offsetY = scaledHeight < PREVIEW_HEIGHT ? (PREVIEW_HEIGHT - scaledHeight) / 2 : 0;
+  const offsetY =
+    scaledHeight < PREVIEW_HEIGHT ? (PREVIEW_HEIGHT - scaledHeight) / 2 : 0;
   iframe.style.top = `${offsetY}px`;
 }
 
@@ -153,7 +180,9 @@ function buildGrid(): HTMLElement {
   resizeObserver = new ResizeObserver((entries) => {
     for (const entry of entries) {
       const wrapper = entry.target as HTMLElement;
-      const iframe = wrapper.querySelector("iframe") as HTMLIFrameElement | null;
+      const iframe = wrapper.querySelector(
+        "iframe",
+      ) as HTMLIFrameElement | null;
       if (!iframe) continue;
       const w = Number(iframe.getAttribute("data-w"));
       const hh = Number(iframe.getAttribute("data-h"));
@@ -172,23 +201,42 @@ function buildGrid(): HTMLElement {
     iframe.setAttribute("data-w", String(ss.width));
     iframe.setAttribute("data-h", String(ss.height));
 
-    const expandBtn = h("button", { className: "card-preview-expand",
-      onclick: (e: MouseEvent) => { e.stopPropagation(); openModal(ss.id, ss.name, ss.size, ss.width, ss.height); }
-    }, [svgNode(ICON_EXPAND), "Preview"]);
+    const expandBtn = h(
+      "button",
+      {
+        className: "card-preview-expand",
+        onclick: (e: MouseEvent) => {
+          e.stopPropagation();
+          openModal(ss.id, ss.name, ss.size, ss.width, ss.height);
+        },
+      },
+      [svgNode(ICON_EXPAND), "Preview"],
+    );
 
-    const previewWrapper = h("div", { className: "card-preview" }, [iframe, expandBtn]);
-
-    const card = h("div", { id: ss.id, className: "card",
-      onclick: () => openModal(ss.id, ss.name, ss.size, ss.width, ss.height)
-    }, [
-      previewWrapper,
-      h("div", { className: "card-footer" }, [
-        h("div", { className: "card-name-row" }, [
-          h("a", { className: "card-name", href: `#${ss.id}` }, [ss.name]),
-          ss.size ? h("span", { className: "card-size-badge" }, [ss.size]) : null,
-        ]),
-      ]),
+    const previewWrapper = h("div", { className: "card-preview" }, [
+      iframe,
+      expandBtn,
     ]);
+
+    const card = h(
+      "div",
+      {
+        id: ss.id,
+        className: "card",
+        onclick: () => openModal(ss.id, ss.name, ss.size, ss.width, ss.height),
+      },
+      [
+        previewWrapper,
+        h("div", { className: "card-footer" }, [
+          h("div", { className: "card-name-row" }, [
+            h("a", { className: "card-name", href: `#${ss.id}` }, [ss.name]),
+            ss.size
+              ? h("span", { className: "card-size-badge" }, [ss.size])
+              : null,
+          ]),
+        ]),
+      ],
+    );
 
     newGrid.append(card);
     resizeObserver.observe(previewWrapper);
@@ -214,7 +262,13 @@ function refreshGrid() {
 
 let modalOverlay: HTMLElement | null = null;
 
-function openModal(ssId: string, name: string, size: string | undefined | null, width: number, height: number) {
+function openModal(
+  ssId: string,
+  name: string,
+  size: string | undefined | null,
+  width: number,
+  height: number,
+) {
   if (modalOverlay) closeModal();
 
   const overlay = h("div", { className: "modal-overlay" });
@@ -224,23 +278,34 @@ function openModal(ssId: string, name: string, size: string | undefined | null, 
       h("span", { className: "modal-title" }, [name]),
       h("div", { className: "modal-meta" }, [
         size ? h("span", { className: "card-size-badge" }, [size]) : null,
-        h("button", { className: "modal-close", onclick: closeModal }, [svgNode(ICON_CLOSE)]),
+        h("button", { className: "modal-close", onclick: closeModal }, [
+          svgNode(ICON_CLOSE),
+        ]),
       ]),
     ]),
     h("div", { className: "modal-iframe-wrapper" }, [
-      h("iframe", { src: iframeUrl(ssId), width: String(width), height: String(height) }),
+      h("iframe", {
+        src: iframeUrl(ssId),
+        width: String(width),
+        height: String(height),
+      }),
     ]),
   ]);
 
   overlay.append(box);
-  overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeModal();
+  });
   document.body.append(overlay);
   modalOverlay = overlay;
 
   requestAnimationFrame(() => overlay.classList.add("visible"));
 
   const onKey = (e: KeyboardEvent) => {
-    if (e.key === "Escape") { closeModal(); document.removeEventListener("keydown", onKey); }
+    if (e.key === "Escape") {
+      closeModal();
+      document.removeEventListener("keydown", onKey);
+    }
   };
   document.addEventListener("keydown", onKey);
 }
@@ -262,7 +327,9 @@ renderHeader(app);
 const body = h("main", { className: "app-body" }, [
   h("div", { className: "page-intro" }, [
     h("span", { className: "page-intro-title" }, ["Screenshots"]),
-    h("span", { className: "page-intro-count" }, [`${screenshots.length} design${screenshots.length !== 1 ? "s" : ""}`]),
+    h("span", { className: "page-intro-count" }, [
+      `${screenshots.length} design${screenshots.length !== 1 ? "s" : ""}`,
+    ]),
   ]),
 ]);
 
