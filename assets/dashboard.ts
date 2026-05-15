@@ -132,20 +132,17 @@ function renderHeader(app: HTMLElement) {
 
 const PREVIEW_HEIGHT = 160;
 
-const MAX_PREVIEW_HEIGHT = 200;
-
 function scaleIframe(wrapper: HTMLElement, iframe: HTMLIFrameElement, naturalWidth: number, naturalHeight: number) {
   const ww = wrapper.clientWidth || 300;
   const scale = ww / naturalWidth;
   const scaledHeight = naturalHeight * scale;
-  // cap height so very tall designs don't dominate
-  const clampedHeight = Math.min(scaledHeight, MAX_PREVIEW_HEIGHT);
-  wrapper.style.height = `${clampedHeight}px`;
   iframe.style.transform = `scale(${scale})`;
   iframe.style.width = `${naturalWidth}px`;
   iframe.style.height = `${naturalHeight}px`;
-  iframe.style.top = "0";
   iframe.style.left = "0";
+  // vertically center if scaled height is less than fixed preview height
+  const offsetY = scaledHeight < PREVIEW_HEIGHT ? (PREVIEW_HEIGHT - scaledHeight) / 2 : 0;
+  iframe.style.top = `${offsetY}px`;
 }
 
 let grid: HTMLElement | null = null;
