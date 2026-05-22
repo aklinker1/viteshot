@@ -1,6 +1,6 @@
 <div align="center">
 
-# ViteShot
+# `@aklinker1/viteshot`
 
 [![NPM Version](https://img.shields.io/npm/v/%40aklinker1%2Fviteshot?logo=npm&labelColor=red&color=white)](https://www.npmjs.com/package/@aklinker1/viteshot) [![Docs](https://img.shields.io/badge/Docs-blue?logo=readme&logoColor=white)](https://github.com/aklinker1/viteshot)
 
@@ -9,6 +9,10 @@ Generate store screenshots and promo images with code, powered by Vite.
 <img width="840" height="1243" alt="Example" src="https://raw.githubusercontent.com/aklinker1/viteshot/main/.github/screenshot.png" />
 
 </div>
+
+```sh
+bun add @aklinker1/viteshot
+```
 
 ## Why?
 
