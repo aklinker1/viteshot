@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.5.2
+
+[compare changes](https://github.com/aklinker1/viteshot/compare/v0.5.1...v0.5.2)
+
+### 🤖 CI
+
+- Use deploy key for publishing ([50b976b](https://github.com/aklinker1/viteshot/commit/50b976b))
+
+### ❤️ Contributors
+
+- Aaron ([@aklinker1](https://github.com/aklinker1))
+
 ## v0.5.0
 
 [compare changes](https://github.com/aklinker1/viteshot/compare/v0.4.7...v0.5.0)
