@@ -6,7 +6,7 @@
 
 Generate store screenshots and promo images with code, powered by Vite.
 
-<img width="840" height="1243" alt="Example" src="https://raw.githubusercontent.com/aklinker1/viteshot/main/.github/screenshot.png" />
+<img width="1247" height="658" alt="Example" src="https://raw.githubusercontent.com/aklinker1/viteshot/main/.github/screenshot.png" />
 
 </div>
 
